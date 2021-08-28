@@ -1,0 +1,31 @@
+<div class="card m-2" *ngIf="post">
+    <div class="card-header ">
+        <div class="row">
+            <div class="col">
+                <img src="{{post.createrPhotoUrl || './assets/user.png'}}" alt="{{post.createrKnownAs}}"
+                    class="card-img  img-thumbnail"> {{post.createrKnownAs}}
+                <p>{{post.postCreated | timeago}}</p>
+            </div>
+            <div class="col d-flex flex-row-reverse">
+                <button *ngIf="post.createrUsername==user.username" (click)="deletepost()"
+                    class=" h-50 btn btn-sm btn-danger "><i class="fa fa-trash"></i></button>
+            </div>
+            <div *appHasRole='["Admin", "Moderator"]' class="col d-flex flex-row-reverse">
+                <button (click)="adminDeletepost()" class=" h-50 btn btn-sm btn-danger "><i
+                        class="fa fa-trash"></i></button>
+            </div>
+
+        </div>
+    </div>
+    <div class="card-body ">
+        <p class="text-left">
+            {{post.content}}
+        </p>
+    </div>
+    <div class="card-footer ">
+        <li *appHasRole='["Member"]' class="list-inline-item"><button (click)="addLike()" class="btn btn-primary">
+                <i class="fa fa-heart"></i></button></li>
+        <li class="list-inline-item"><button (click)="showLikes()" class="btn btn-info">
+                <a>Likes</a> </button></li>
+    </div>
+</div>

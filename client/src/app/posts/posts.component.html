@@ -1,0 +1,61 @@
+<div class="col">
+    <tabset class="member-tabset" #postsTabs>
+        <tab heading='Make Post  {{user.knownAs}}' (selectTab)="onTabActivated($event)">
+            <form #postForm="ngForm" id="postForm" (ngSubmit)="createPost()">
+                <h4>What are you thinking about</h4>
+                <textarea class="form-control" [(ngModel)]="content" name="post" rows="6"></textarea>
+                <div class="card-footer">
+                    <button [disabled]="!postForm.dirty" form="postForm" type="submit"
+                        class="btn btn-success btn-block">Save Post</button>
+                </div>
+            </form>
+        </tab>
+        <tab heading='MY Postss' (selectTab)="onTabActivated($event)">
+            <div class="row mt-3">
+                <div class="row post-list" *ngFor="let post of myPosts">
+                    <app-post-card [post]=post [member]="member" (deletePost)="deletePost($event)">
+                    </app-post-card>
+
+                </div>
+            </div>
+            <div class="d-flex justify-content-center" *ngIf="mypagination">
+                <pagination [boundaryLinks]="true" [totalItems]="mypagination.totalItems"
+                    [itemsPerPage]="mypagination.itemsPerPage" [(ngModel)]="mypagination.currentPage"
+                    (pageChanged)="myPostsPageChanged($event)" previousText="&lsaquo;" nextText="&rsaquo;"
+                    firstText="&laquo;" lastText="&raquo;">
+                </pagination>
+            </div>
+        </tab>
+        <tab heading='Others Posts' (selectTab)="onTabActivated($event)">
+            <div class="row mt-3">
+                <div class="row post-list" *ngFor="let post of posts">
+                    <app-post-card [post]=post [member]="member">
+                    </app-post-card>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-center" *ngIf="otherpagination">
+                <pagination [boundaryLinks]="true" [totalItems]="otherpagination.totalItems"
+                    [itemsPerPage]="otherpagination.itemsPerPage" [(ngModel)]="otherpagination.currentPage"
+                    (pageChanged)="otherPostsPageChanged($event)" previousText="&lsaquo;" nextText="&rsaquo;"
+                    firstText="&laquo;" lastText="&raquo;">
+                </pagination>
+            </div>
+        </tab>
+        <tab heading='Posts I Like' (selectTab)="onTabActivated($event)">
+            <div class="row mt-3">
+                <div class="row post-list" *ngFor="let post of LikedPosts">
+                    <app-post-card [post]=post [member]="member">
+                    </app-post-card>
+                </div>
+            </div>
+            <div class="d-flex justify-content-center" *ngIf="likedPostspagination">
+                <pagination [boundaryLinks]="true" [totalItems]="likedPostspagination.totalItems"
+                    [itemsPerPage]="likedPostspagination.itemsPerPage" [(ngModel)]="likedPostspagination.currentPage"
+                    (pageChanged)="likedPostspaginationPageChanged($event)" previousText="&lsaquo;" nextText="&rsaquo;"
+                    firstText="&laquo;" lastText="&raquo;">
+                </pagination>
+            </div>
+        </tab>
+    </tabset>
+</div>

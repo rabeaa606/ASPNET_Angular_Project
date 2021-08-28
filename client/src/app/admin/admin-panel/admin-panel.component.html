@@ -1,0 +1,31 @@
+<h2>Admin Panel</h2>
+<div class="tab-panel">
+    <tabset class="member-tabset">
+        <tab heading='User management' *appHasRole='["Admin"]'>
+            <div class="container">
+                <app-user-management></app-user-management>
+            </div>
+        </tab>
+        <tab heading='Photo management' *appHasRole='["Admin", "Moderator"]'>
+            <div class="container">
+                <app-photo-management></app-photo-management>
+            </div>
+        </tab>
+        <tab heading='Posts management' *appHasRole='["Admin", "Moderator"]'>
+            <div class="row mt-3">
+                <div class="row post-list" *ngFor="let post of posts">
+                    <app-post-card [post]=post [member]="member" (deletePost)="deletePost($event)">
+                    </app-post-card>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-center" *ngIf="otherpagination">
+                <pagination [boundaryLinks]="true" [totalItems]="otherpagination.totalItems"
+                    [itemsPerPage]="otherpagination.itemsPerPage" [(ngModel)]="otherpagination.currentPage"
+                    (pageChanged)="PageChanged($event)" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;"
+                    lastText="&raquo;">
+                </pagination>
+            </div>
+        </tab>
+    </tabset>
+</div>
